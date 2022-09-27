@@ -1,0 +1,19 @@
+- hosts: localhost
+  vars:
+    gunicorn_dir: "{{ playbook_dir }}/gunicorn"
+  tasks:
+    - name: Clone the gunicorn repository
+      git:
+        repo: https://github.com/v4rn/gunicorn.git
+        dest: "{{ gunicorn_dir }}"
+        clone: yes
+        update: yes
+    
+    - name: Goto gunicorn directory and build gunicorn
+      command: "chdir={{ gunicorn_dir }} make build"
+
+
+#    - name: Setup virtual env in gunicorn dir
+#      ansible.builtin.pip:
+#        requirements: "{{ gunicorn_dir }}/requirements_dev.txt"
+#        virtualenv: "{{ gunicorn_dir }}/env"
